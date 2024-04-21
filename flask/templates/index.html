@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <style type="text/css">
+      body {
+        background-color: black;
+        font-size: 20px;
+        color: white;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        width: 700px;
+      }
+      table {
+        width: 80%;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid white;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form action="/add" method="POST">
+      <label for="add_userId">Add UserID:</label>
+      <input type="text" id="add_userId" name="add_userId" required />
+      <button type="submit">Add</button>
+    </form>
+
+    <form action="/delete" method="POST">
+      <label for="delete_userId">DELETE UserID:</label>
+      <input type="text" id="delete_userId" name="delete_userId" required />
+      <button type="submit">Delete</button>
+    </form>
+
+    <h1>Registered Users</h1>
+    <table>
+      {% for user in userdata %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.userId }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
