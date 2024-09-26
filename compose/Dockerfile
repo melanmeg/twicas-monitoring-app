@@ -14,3 +14,8 @@ RUN poetry run playwright install
 RUN poetry run playwright install-deps
 
 # poetry run pytest test1.py
+
+# FROM python:3.12-bookworm
+
+# RUN pip install playwright==@1.47.0 && \
+#   playwright install --with-deps
