@@ -10,3 +10,8 @@
 
 - webhook を利用
 - コメントをリアルタイム収集
+
+```bash
+# test
+poetry run pytest compose/playwright/test1.py
+```

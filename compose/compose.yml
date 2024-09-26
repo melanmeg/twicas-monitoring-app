@@ -1,0 +1,13 @@
+services:
+  twicas:
+    build:
+      context: .
+    image: twicas:latest
+    container_name: twicas
+    hostname: twicas
+    tty: true
+    entrypoint: bash
+
+networks:
+  default:
+    name: twicas
