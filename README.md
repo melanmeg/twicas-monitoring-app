@@ -27,12 +27,40 @@ node test.js
 # コーデック確認
 ffprobe input.mp4
 
+### webm to webm (音声だけそのまま抽出)
+ffmpeg -i input.mp4 -c:a copy -q:a 0 -map a output.mp3
+
 # webm to mp4 (メタデータ付与と音声コーデックをopusからmp3へ変換)
 ffmpeg -i input.webm -c:v copy -c:a libmp3lame output.mp4
 
 # webm to mp3 (メタデータ付与と音声コーデックをopusからmp3へ変換)
 ffmpeg -i input.webm -c:a libmp3lame -q:a 0 output.mp3
 
-# mp4 to mp3
-ffmpeg -i input.mp4 -q:a 0 -map a output.mp3
+# webm or mp4 to mp3 (メタデータ付与と音声コーデックをopusからmp3へ変換)
+ffmpeg -i input.mp4 -c:a libmp3lame -q:a 0 -map a output.mp3
+```
+
+### デバイス情報確認
+```bash
+sudo lspci # PCIデバイスを一覧表示する
+sudo lspci -v | grep VGA # VGA確認
+sudo lspci -v | grep Ethernet # ネットワークカード確認
+sudo lspci -v | grep Audio # オーディオデバイス確認
+```
+
+### kvm
+```bash
+# オプションメモ
+# --video model=qxl \
+# --soundhw ich6 \
+
+# メモ
+sudo apt-get install -y \
+  libatk1.0-0 libatk-bridge2.0-0 libnss3 libxss1 libxrandr2 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 \
+  libasound2t64 \
+  libcups2 \
+  libgbm1 \
+  libpango-1.0-0 libpangocairo-1.0-0 \
+# ↑これは↓ので一括で入ると思われる
+chromium-browser
 ```

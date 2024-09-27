@@ -2,7 +2,6 @@ import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-
 import { recordMedia } from "./record-media.js";
 
 // __dirnameの代替として、現在のディレクトリを取得
