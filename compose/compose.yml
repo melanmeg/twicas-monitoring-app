@@ -5,6 +5,8 @@ services:
     image: twicas:latest
     container_name: twicas
     hostname: twicas
+    volumes:
+      - ./playwright:/playwright
     tty: true
     entrypoint: bash
 
