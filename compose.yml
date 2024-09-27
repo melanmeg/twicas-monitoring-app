@@ -1,0 +1,33 @@
+services:
+  twicas:
+    build:
+      context: ./containers/puppeteer
+    image: twicas:latest
+    container_name: twicas
+    hostname: twicas
+    tty: true
+    entrypoint: bash
+
+  # flask:
+  #   build:
+  #     context: ./containers/flask
+  #   image: flask:latest
+  #   container_name: flask
+  #   hostname: flask
+  #   tty: true
+  #   entrypoint: bash
+
+  # ffmpeg:
+  #   build:
+  #     context: ./containers/ffmpeg
+  #   image: ffmpeg:latest
+  #   container_name: ffmpeg
+  #   hostname: ffmpeg
+  #   volumes:
+  #     - ./ffmpeg/data:/data
+  #   tty: true
+  #   entrypoint: bash
+
+networks:
+  default:
+    name: twicas
