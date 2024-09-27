@@ -64,3 +64,14 @@ sudo apt-get install -y \
 # ↑これは↓ので一括で入ると思われる
 chromium-browser
 ```
+
+
+## タスク
+> dockerで録画・録音の成功まではきた。
+
+-　webhook実装もjs,tsで、puppeteerコンテナ完成させる
+- scyllaDB容易・使い方
+- scyllaDBと連携
+- webで可視化
+- k8sに載せて動くかシンプルテスト
+- k8sに載せる方法考える
