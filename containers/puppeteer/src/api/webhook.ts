@@ -1,55 +1,52 @@
 import * as http from "http";
 import * as fs from "fs";
-// import * as path from 'path';
 import { Page } from "puppeteer";
-// import { spawn, ChildProcess } from 'child_process';
 import { IncomingWebHookResponse } from "../interfaces.js";
 import { Config } from "../environments.js";
 import { twicasMonitoring } from "./twicas_monitoring.js";
-
-// let processes: ChildProcess[] = [];
+import { setupBrowser, setupPage } from "../common/setup.js";
 
 const log = (message: string) => {
   const timestamp = new Date().toISOString();
   fs.appendFileSync(Config.LOG_FILE_PATH, `${timestamp} - INFO - ${message}\n`);
 };
 
+const processMap = new Map<string, AbortController>(); // userIdごとにAbortControllerを管理
+
 export async function liveStart(page: Page, userId: string): Promise<void> {
   console.info(`${userId}: Live Start`);
-  await Promise.all([
-    twicasMonitoring(page, userId), // コメント収集
-  ]);
-  console.info(`${userId}: Start`);
+
+  const abortController = new AbortController(); // キャンセル用のコントローラー
+  // プロセスを実行して保存
+  processMap.set(userId, abortController);
+
+  try {
+    await twicasMonitoring(page, userId, abortController.signal); // キャンセル可能な処理
+  } catch (error) {
+    if ((error as Error).name === "AbortError") {
+      console.info(`${userId}: Process aborted`);
+    } else {
+      console.error(error);
+    }
+  }
 }
 
-export function liveEnd(userId: string): void {
+export async function liveEnd(userId: string): Promise<void> {
   console.info(`${userId}: Live End`);
+
+  // 該当するuserIdのプロセスが存在すれば終了
+  const controller = processMap.get(userId);
+  if (controller) {
+    controller.abort(); // プロセスのキャンセル
+    console.info(`${userId}: Process terminated`);
+    processMap.delete(userId);
+  } else {
+    console.warn(`${userId}: No process found`);
+  }
 }
 
-// export function liveStart(page: Page, userId: string): void {
-//   console.info(`${userId}: Live Start`);
-//   const process = spawn('node', [path.join(__dirname, 'backgroundTask.js'), userId], {
-//     detached: true,
-//     stdio: 'ignore',
-//   });
-
-//   process.unref();
-//   processes.push(process);
-//   console.info(`${userId}: Background Process Start`);
-// }
-
-// export function liveEnd(userId: string): void {
-//   console.info(`${userId}: Live End`);
-//   processes.forEach((process) => {
-//     if (process.pid) {
-//       process.kill();
-//       console.info(`${userId}: Background Process Terminate`);
-//     }
-//   });
-// }
-
-export async function webhook(page: Page): Promise<void> {
-  const server = http.createServer((req, res) => {
+export async function webhook(): Promise<void> {
+  const server = http.createServer(async (req, res) => {
     if (req.method === "POST") {
       let body = "";
 
@@ -57,7 +54,7 @@ export async function webhook(page: Page): Promise<void> {
         body += chunk.toString(); // convert Buffer to string
       });
 
-      req.on("end", () => {
+      req.on("end", async () => {
         log("| ---------------------------- |");
         log("| ---------------------------- |");
         log("| ----- WebhookIncoming! ----- |");
@@ -82,6 +79,9 @@ export async function webhook(page: Page): Promise<void> {
 
         const is_live: boolean = parsedBody.broadcaster.is_live;
         const userId: string = parsedBody.broadcaster.screen_id;
+
+        const browser = await setupBrowser();
+        const page = await setupPage(browser);
 
         if (is_live) {
           liveStart(page, userId);

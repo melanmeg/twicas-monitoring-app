@@ -69,7 +69,6 @@ chromium-browser
 ## タスク
 > dockerで録画・録音の成功まではきた。
 
--　webhook実装もjs,tsで、puppeteerコンテナ完成させる
 - scyllaDB容易・使い方
 - scyllaDBと連携
 - webで可視化
@@ -79,6 +78,5 @@ chromium-browser
 ## テスト
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twitcasting_jp", "is_live": "true"}}' http://localhost:18080
-
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twitcasting_jp", "is_live": true}}' http://localhost:18080
 ```

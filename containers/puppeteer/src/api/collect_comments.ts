@@ -74,15 +74,29 @@ export async function postCommentToLoki(
 export async function collectComments(
   page: Page,
   userId: string,
+  signal: AbortSignal,
   flag: boolean = true
 ): Promise<void> {
-  await page.waitForSelector(
-    "#comment-list-app > div.tw-comment-list-view.tw-player-page__comment__list > div.tw-comment-list-view__scroller"
-  );
+  signal.addEventListener("abort", () => {
+    console.info(`${userId}: Monitoring aborted`);
+  });
+
+  const selector =
+    "#comment-list-app > div.tw-comment-list-view.tw-player-page__comment__list > div.tw-comment-list-view__scroller";
+  await page.waitForSelector(selector, {
+    visible: true,
+    timeout: 5000,
+  });
 
   let oldId = "",
     oldComment = "";
   while (flag) {
+    // 任意のモニタリング処理
+    if (signal.aborted) {
+      console.info(`${userId}: Aborting monitoring...`);
+      break;
+    }
+
     await new Promise((r) => setTimeout(r, 100)); // 0.1秒スリープ
     const commentsData = await fetchComments(page);
     if (commentsData) {

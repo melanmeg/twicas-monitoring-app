@@ -5,7 +5,8 @@ import { collectComments } from "./collect_comments.js";
 
 export async function twicasMonitoring(
   page: Page,
-  userId: string
+  userId: string,
+  signal: AbortSignal
 ): Promise<void> {
   // ツイキャス用
   const twicasUserUrl = `https://twitcasting.tv/${userId}`;
@@ -42,8 +43,8 @@ export async function twicasMonitoring(
   // });
 
   await Promise.all([
-    recordMedia(page, 10000, "audio.webm", true), // 音声録音
+    // recordMedia(page, 10000, "audio.webm", true), // 音声録音
     // recordMedia(page, 10000, "video.webm", false), // 動画録音
-    collectComments(page, userId), // コメント収集
+    collectComments(page, userId, signal), // コメント収集
   ]);
 }
