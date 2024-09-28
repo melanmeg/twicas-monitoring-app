@@ -1,5 +1,6 @@
 import puppeteer, { Browser, Page } from "puppeteer";
 import path from "path";
+import * as fs from "fs";
 import { fileURLToPath } from "url";
 import { Config } from "../environments.js";
 
@@ -38,4 +39,24 @@ export async function setupPage(browser: Browser): Promise<Page> {
   });
 
   return page;
+}
+
+export async function setupLogDir(): Promise<void> {
+  const directoryPath = Config.LOG_DIR;
+
+  if (!fs.existsSync(directoryPath)) {
+    await new Promise<void>((resolve, reject) => {
+      fs.mkdir(directoryPath, { recursive: true }, (err) => {
+        if (err) {
+          return reject(
+            new Error(`フォルダの作成に失敗しました: ${err.message}`)
+          );
+        }
+        console.log("フォルダが作成されました:", directoryPath);
+        resolve();
+      });
+    });
+  } else {
+    console.log("フォルダは既に存在します:", directoryPath);
+  }
 }
