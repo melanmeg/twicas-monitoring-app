@@ -1,10 +1,7 @@
 export class Config {
   static readonly YOUTUBE_TEST_URL: string =
     "https://www.youtube.com/watch?v=BILQV4gAOGI&list=RDBILQV4gAOGI&start_radio=1";
-  // static readonly USER_ID: string = "c:mairu_da";
-  static readonly USER_ID: string = "nyr_6r";
 
-  static readonly TWICAS_USER_URL: string = `https://twitcasting.tv/${Config.USER_ID}`;
   static readonly LOKI_URL: string = "http://x.x.x.x:3100/loki/api/v1/push";
 
   static readonly USER_AGENT: string =

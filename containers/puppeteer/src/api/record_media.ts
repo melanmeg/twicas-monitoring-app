@@ -1,4 +1,4 @@
-import { Page } from 'puppeteer';
+import { Page } from "puppeteer";
 
 declare global {
   interface Window {
@@ -25,7 +25,8 @@ export async function recordMedia(
       }
 
       const mediaStream = video.captureStream();
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
 
       let source: MediaElementAudioSourceNode | undefined;
       if (isAudio) {
@@ -39,7 +40,9 @@ export async function recordMedia(
         source.connect(audioContext.destination); // 音声再生用に接続
       }
 
-      const mediaRecorder = new MediaRecorder(isAudio ? destination.stream : mediaStream);
+      const mediaRecorder = new MediaRecorder(
+        isAudio ? destination.stream : mediaStream
+      );
       const chunks: Blob[] = [];
 
       mediaRecorder.ondataavailable = (event: BlobEvent) => {

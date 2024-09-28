@@ -75,3 +75,10 @@ chromium-browser
 - webで可視化
 - k8sに載せて動くかシンプルテスト
 - k8sに載せる方法考える
+
+## テスト
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twitcasting_jp", "is_live": "true"}}' http://localhost:18080
+
+```

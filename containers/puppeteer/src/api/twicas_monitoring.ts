@@ -1,26 +1,35 @@
 import { TimeoutError, Page } from "puppeteer";
 import { recordMedia } from "./record_media.js";
 import { collectComments } from "./collect_comments.js";
-import { Config } from '../environments.js';
 // import { wait } from '../common/utils.js';
 
-export async function twicasMonitoring(page: Page, userId: string): Promise<void> {
+export async function twicasMonitoring(
+  page: Page,
+  userId: string
+): Promise<void> {
   // ツイキャス用
-  await page.goto(Config.TWICAS_USER_URL);
+  const twicasUserUrl = `https://twitcasting.tv/${userId}`;
+  await page.goto(twicasUserUrl);
   // ツイキャス配信の再生ボタン
-  const selector = '#player > div > div.tw-stream-movie-layout__movie > div > div.tw-play-button-layer.tw-play-button-layer--mandatory.tw-big-play-button > div > button';
+  const selector =
+    "#player > div > div.tw-stream-movie-layout__movie > div > div.tw-play-button-layer.tw-play-button-layer--mandatory.tw-big-play-button > div > button";
   try {
-    const element = await page.waitForSelector(selector, { visible: true, timeout: 5000 });
+    const element = await page.waitForSelector(selector, {
+      visible: true,
+      timeout: 5000,
+    });
     if (element) {
       await element.click();
     } else {
-      console.warn('指定した要素が見つかりませんでした');
+      console.warn("指定した要素が見つかりませんでした");
     }
   } catch (error) {
     if (error instanceof TimeoutError) {
-      console.info('要素が指定された時間内に見つかりませんでしたが、処理を続けます。');
+      console.info(
+        "要素が指定された時間内に見つかりませんでしたが、処理を続けます。"
+      );
     } else {
-      console.error('エラー:', error); // 他のエラーを表示
+      console.error("エラー:", error); // 他のエラーを表示
     }
   }
 
