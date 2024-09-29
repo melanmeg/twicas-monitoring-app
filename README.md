@@ -65,20 +65,10 @@ sudo apt-get install -y \
 chromium-browser
 ```
 
-
-## タスク
-> dockerで録画・録音の成功まではきた。
-
-- scyllaDB容易・使い方
-- scyllaDBと連携
-- webで可視化
-- k8sに載せて動くかシンプルテスト
-- k8sに載せる方法考える
-
 ## テスト
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "miel_ii", "is_live": true}}' http://localhost:18080
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twicasting_jp", "is_live": true}}' http://localhost:18080
 ```
 
 ```bash
