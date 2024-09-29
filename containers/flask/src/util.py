@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from typing import Optional, Tuple
 
@@ -5,11 +6,12 @@ import requests
 from flask import Flask, abort, jsonify, redirect
 from requests.models import Response
 
-DB_FILE_PATH = "/root/work/volumes/flask/twicasdb.sqlite"
+DB_FILE_PATH = os.getenv("DB_FILE_PATH")
 
 app = Flask(__name__)
-app.config["DATABASE"] = DB_FILE_PATH
-token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+app.config["DATABASE"] = os.path.join(os.path.dirname(__file__), "twicasdb.sqlite")
+
+token = os.getenv("TOKEN")
 
 
 def get_db():

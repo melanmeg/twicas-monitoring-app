@@ -1,21 +1,21 @@
 services:
-  twicas:
-    build:
-      context: ./containers/puppeteer
-    image: twicas:latest
-    container_name: twicas
-    hostname: twicas
-    environment:
-      - USER_AGENT
-      - YOUTUBE_TEST_URL
-      - OPENSEARCH_URL
-      - OPENSEARCH_USER
-      - OPENSEARCH_PASSWORD
-      - DOWNLOAD_DIR
-      - PORT_NUM
-      - LOG_DIR
-    ports:
-      - "18080:18080"
+  # twicas:
+  #   build:
+  #     context: ./containers/puppeteer
+  #   image: twicas:latest
+  #   container_name: twicas
+  #   hostname: twicas
+  #   environment:
+  #     - USER_AGENT
+  #     - YOUTUBE_TEST_URL
+  #     - OPENSEARCH_URL
+  #     - OPENSEARCH_USER
+  #     - OPENSEARCH_PASSWORD
+  #     - DOWNLOAD_DIR
+  #     - PORT_NUM
+  #     - LOG_DIR
+  #   ports:
+  #     - "18080:18080"
 
   flask:
     build:
@@ -26,19 +26,19 @@ services:
     environment:
       - TOKEN
       - DB_FILE_PATH
-    tty: true
-    entrypoint: bash
+    ports:
+      - "5000:5000"
 
-  ffmpeg:
-    build:
-      context: ./containers/ffmpeg
-    image: ffmpeg:latest
-    container_name: ffmpeg
-    hostname: ffmpeg
-    volumes:
-      - ./containers/ffmpeg/data:/data
-    tty: true
-    entrypoint: bash
+  # ffmpeg:
+  #   build:
+  #     context: ./containers/ffmpeg
+  #   image: ffmpeg:latest
+  #   container_name: ffmpeg
+  #   hostname: ffmpeg
+  #   volumes:
+  #     - ./containers/ffmpeg/data:/data
+  #   tty: true
+  #   entrypoint: bash
 
 networks:
   default:

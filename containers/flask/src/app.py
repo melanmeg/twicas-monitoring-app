@@ -1,4 +1,5 @@
-from flask import g, render_template, request
+from config import Config
+from flask import Flask, g, render_template, request
 from util import (
     add_check_userId,
     app,
@@ -10,6 +11,9 @@ from util import (
     setUser,
     unsetUser,
 )
+
+app = Flask(__name__)
+app.config.from_object(Config)
 
 
 @app.teardown_appcontext
@@ -72,7 +76,7 @@ def delete():
 
 def main():
     app.debug = False
-    app.run(host="0.0.0.0", port=80)
+    app.run(host=app.config["HOST"], port=app.config["PORT"])
 
 
 if __name__ == "__main__":
