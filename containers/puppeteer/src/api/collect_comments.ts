@@ -1,6 +1,6 @@
 import { Page } from "puppeteer";
 import * as cheerio from "cheerio";
-import axios from "axios";
+import { Client } from "@opensearch-project/opensearch";
 
 import { Config } from "../environments.js";
 import { CommentData, CommentValues } from "../interfaces.js";
@@ -37,15 +37,25 @@ export async function fetchComments(page: Page): Promise<CommentData | null> {
   return { name, id, comment, date };
 }
 
-export async function postCommentToLoki(
+export async function postCommentToOpensearch(
   userId: string,
   name: string[],
   id: string[],
   comment: string[],
   date: string[]
 ): Promise<void> {
+  const client = new Client({
+    node: Config.OPENSEARCH_URL,
+    auth: {
+      username: Config.OPENSEARCH_USER,
+      password: Config.OPENSEARCH_PASSWORD,
+    },
+    ssl: {
+      rejectUnauthorized: false, // SSL証明書の検証を無効化
+    },
+  });
+
   const currentUnixTime = Math.floor(Date.now() * 10 ** 6); // ナノ秒のタイムスタンプを生成
-  const headers = { "Content-Type": "application/json" };
 
   const values: CommentValues = {
     name: name[0],
@@ -55,19 +65,19 @@ export async function postCommentToLoki(
   };
 
   const data = {
-    streams: [
-      {
-        stream: { twicas: `${userId}/comments` },
-        values: [[String(currentUnixTime), JSON.stringify(values)]],
-      },
-    ],
+    timestamp: currentUnixTime,
+    userId: userId,
+    values: values,
   };
 
   try {
-    await axios.post(Config.LOKI_URL, data, { headers });
-    console.log("Comment posted to Loki");
+    const response = await client.index({
+      index: "comments-index", // インデックス名
+      body: data,
+    });
+    console.log("Comment posted to Opensearch:", response);
   } catch (error) {
-    console.error("Error posting comment to Loki:", error);
+    console.error("Error posting comment to Opensearch:", error);
   }
 }
 
@@ -102,7 +112,7 @@ export async function collectComments(
     if (commentsData) {
       const { name, id, comment, date } = commentsData;
       if (oldId !== id[0] && oldComment !== comment[0]) {
-        // await postCommentToLoki(userId, name, id, comment, date);
+        await postCommentToOpensearch(userId, name, id, comment, date);
         oldId = id[0];
         oldComment = comment[0];
 
