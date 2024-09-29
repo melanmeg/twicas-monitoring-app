@@ -70,6 +70,7 @@ chromium-browser
 ```bash
 curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twicasting_jp", "is_live": true}}' http://localhost:18080
 curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twicasting_jp", "is_live": true}}' http://192.168.11.100:8089
+
 ```
 
 ```bash
