@@ -78,5 +78,15 @@ chromium-browser
 ## テスト
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twitcasting_jp", "is_live": true}}' http://localhost:18080
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "nyr_6r", "is_live": true}}' http://localhost:18080
+```
+
+```bash
+curl -X POST "http://localhost:9200/logs/_doc" -H 'Content-Type: application/json' -d '{
+  "timestamp": "2024-09-29T20:00:00Z",
+  "level": "INFO",
+  "message": "This is a sample log message",
+  "service": "my-service",
+  "userId": "12345"
+}'
 ```

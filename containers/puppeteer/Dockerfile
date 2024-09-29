@@ -25,3 +25,7 @@ RUN chown -R pptruser:pptruser /app
 
 USER pptruser
 RUN npm i
+
+EXPOSE 18080
+
+CMD ["npm", "run", "start"]

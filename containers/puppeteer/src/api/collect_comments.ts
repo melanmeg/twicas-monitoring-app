@@ -46,16 +46,13 @@ export async function postCommentToOpensearch(
 ): Promise<void> {
   const client = new Client({
     node: Config.OPENSEARCH_URL,
-    auth: {
-      username: Config.OPENSEARCH_USER,
-      password: Config.OPENSEARCH_PASSWORD,
-    },
     ssl: {
       rejectUnauthorized: false, // SSL証明書の検証を無効化
     },
   });
 
-  const currentUnixTime = Math.floor(Date.now() * 10 ** 6); // ナノ秒のタイムスタンプを生成
+  const currentDate = new Date();
+  const currentTimestamp = currentDate.toISOString();
 
   const values: CommentValues = {
     name: name[0],
@@ -65,7 +62,7 @@ export async function postCommentToOpensearch(
   };
 
   const data = {
-    timestamp: currentUnixTime,
+    timestamp: currentTimestamp,
     userId: userId,
     values: values,
   };
@@ -75,7 +72,13 @@ export async function postCommentToOpensearch(
       index: "comments-index", // インデックス名
       body: data,
     });
-    console.log("Comment posted to Opensearch:", response);
+    console.log(
+      `Comment posted to OpenSearch - ID: ${response.body._id}, Status: ${
+        response.statusCode
+      }, Result: ${response.body.result}, Shards: ${JSON.stringify(
+        response.body._shards
+      )}`
+    );
   } catch (error) {
     console.error("Error posting comment to Opensearch:", error);
   }

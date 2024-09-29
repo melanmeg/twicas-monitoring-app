@@ -2,7 +2,7 @@ export class Config {
   static readonly YOUTUBE_TEST_URL: string =
     "https://www.youtube.com/watch?v=BILQV4gAOGI&list=RDBILQV4gAOGI&start_radio=1";
 
-  static readonly OPENSEARCH_URL: string = "http://192.168.11.100:9200";
+  static readonly OPENSEARCH_URL: string = "http://localhost:9200";
   static readonly OPENSEARCH_USER: string = "admin";
   static readonly OPENSEARCH_PASSWORD: string = "admin";
 

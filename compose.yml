@@ -5,8 +5,8 @@ services:
     image: twicas:latest
     container_name: twicas
     hostname: twicas
-    tty: true
-    entrypoint: bash
+    ports:
+      - "18080:18080"
 
   flask:
     build:
