@@ -23,6 +23,9 @@ services:
     image: flask:latest
     container_name: flask
     hostname: flask
+    environment:
+      - TOKEN
+      - DB_FILE_PATH
     tty: true
     entrypoint: bash
 
