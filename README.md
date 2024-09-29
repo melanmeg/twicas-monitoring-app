@@ -78,11 +78,11 @@ chromium-browser
 ## テスト
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "nyr_6r", "is_live": true}}' http://localhost:18080
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "c:o_o___xxx_", "is_live": true}}' http://localhost:18080
 ```
 
 ```bash
-curl -X POST "http://localhost:9200/logs/_doc" -H 'Content-Type: application/json' -d '{
+curl -X POST "http://opensearch-node1:9200/logs/_doc" -H 'Content-Type: application/json' -d '{
   "timestamp": "2024-09-29T20:00:00Z",
   "level": "INFO",
   "message": "This is a sample log message",

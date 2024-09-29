@@ -1,16 +1,17 @@
+import "./dotenv.js";
+
 export class Config {
-  static readonly YOUTUBE_TEST_URL: string =
-    "https://www.youtube.com/watch?v=BILQV4gAOGI&list=RDBILQV4gAOGI&start_radio=1";
+  static readonly YOUTUBE_TEST_URL: string = process.env.YOUTUBE_TEST_URL!;
 
-  static readonly OPENSEARCH_URL: string = "http://localhost:9200";
-  static readonly OPENSEARCH_USER: string = "admin";
-  static readonly OPENSEARCH_PASSWORD: string = "admin";
+  static readonly OPENSEARCH_URL: string = process.env.OPENSEARCH_URL!;
 
-  static readonly USER_AGENT: string =
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36";
-  static readonly DOWNLOAD_DIR: string = "downloads";
+  static readonly USER_AGENT: string = process.env.USER_AGENT!;
 
-  static readonly PORT_NUM: number = 18080;
-  static readonly LOG_DIR: string = "/tmp/logs";
+  static readonly DOWNLOAD_DIR: string = process.env.DOWNLOAD_DIR!;
+
+  static readonly PORT_NUM: number = parseInt(process.env.PORT_NUM!, 10);
+
+  static readonly LOG_DIR: string = process.env.LOG_DIR!;
+
   static readonly LOG_FILE_PATH: string = `${Config.LOG_DIR}/webhook.log`;
 }

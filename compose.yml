@@ -5,6 +5,13 @@ services:
     image: twicas:latest
     container_name: twicas
     hostname: twicas
+    environment:
+      - USER_AGENT
+      - YOUTUBE_TEST_URL
+      - OPENSEARCH_URL
+      - DOWNLOAD_DIR
+      - PORT_NUM
+      - LOG_DIR
     ports:
       - "18080:18080"
 

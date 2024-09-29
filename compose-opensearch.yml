@@ -1,5 +1,23 @@
 version: "3"
 services:
+  twicas:
+    build:
+      context: ./containers/puppeteer
+    image: twicas:latest
+    container_name: twicas
+    hostname: twicas
+    environment:
+      - USER_AGENT
+      - YOUTUBE_TEST_URL
+      - OPENSEARCH_URL=http://opensearch-node1:9200
+      - DOWNLOAD_DIR
+      - PORT_NUM
+      - LOG_DIR
+    ports:
+      - "18080:18080"
+    networks:
+      - opensearch-net
+
   opensearch-node1:
     image: opensearchproject/opensearch:latest
     container_name: opensearch-node1
@@ -26,6 +44,7 @@ services:
       - 9600:9600 # Performance Analyzer
     networks:
       - opensearch-net # All of the containers will join the same Docker bridge network
+
   opensearch-node2:
     image: opensearchproject/opensearch:latest
     container_name: opensearch-node2
@@ -49,6 +68,7 @@ services:
       - opensearch-data2:/usr/share/opensearch/data # Creates volume called opensearch-data2 and mounts it to the container
     networks:
       - opensearch-net # All of the containers will join the same Docker bridge network
+
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:latest
     container_name: opensearch-dashboards

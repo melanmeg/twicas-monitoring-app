@@ -8,9 +8,9 @@ FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
 WORKDIR /app
 
 COPY package.json package-lock.json tsconfig.json ./
-COPY ./src ./src
-
 RUN npm i && npm ci
+
+COPY ./src ./src
 RUN npm run build
 
 
