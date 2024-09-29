@@ -5,6 +5,11 @@ export class Config {
 
   static readonly OPENSEARCH_URL: string = process.env.OPENSEARCH_URL!;
 
+  static readonly OPENSEARCH_USER: string = process.env.OPENSEARCH_USER!;
+
+  static readonly OPENSEARCH_PASSWORD: string =
+    process.env.OPENSEARCH_PASSWORD!;
+
   static readonly USER_AGENT: string = process.env.USER_AGENT!;
 
   static readonly DOWNLOAD_DIR: string = process.env.DOWNLOAD_DIR!;

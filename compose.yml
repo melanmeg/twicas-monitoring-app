@@ -9,6 +9,8 @@ services:
       - USER_AGENT
       - YOUTUBE_TEST_URL
       - OPENSEARCH_URL
+      - OPENSEARCH_USER
+      - OPENSEARCH_PASSWORD
       - DOWNLOAD_DIR
       - PORT_NUM
       - LOG_DIR

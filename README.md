@@ -78,7 +78,7 @@ chromium-browser
 ## テスト
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "c:o_o___xxx_", "is_live": true}}' http://localhost:18080
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "miel_ii", "is_live": true}}' http://localhost:18080
 ```
 
 ```bash

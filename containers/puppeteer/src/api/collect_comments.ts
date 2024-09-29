@@ -46,6 +46,10 @@ export async function postCommentToOpensearch(
 ): Promise<void> {
   const client = new Client({
     node: Config.OPENSEARCH_URL,
+    auth: {
+      username: Config.OPENSEARCH_USER,
+      password: Config.OPENSEARCH_PASSWORD,
+    },
     ssl: {
       rejectUnauthorized: false, // SSL証明書の検証を無効化
     },
