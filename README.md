@@ -13,6 +13,9 @@
 ### ffmpeg
 - コーデック変換したい時用
 
+### publisher
+- rabbitmqへpublishする用
+
 ## コマンド
 
 ### puppeteer

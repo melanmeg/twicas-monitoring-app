@@ -17,17 +17,17 @@ services:
   #   ports:
   #     - "18080:18080"
 
-  flask:
-    build:
-      context: ./containers/flask
-    image: flask:latest
-    container_name: flask
-    hostname: flask
-    environment:
-      - TOKEN
-      - DB_FILE_PATH
-    ports:
-      - "5000:5000"
+  # flask:
+  #   build:
+  #     context: ./containers/flask
+  #   image: flask:latest
+  #   container_name: flask
+  #   hostname: flask
+  #   environment:
+  #     - TOKEN
+  #     - DB_FILE_PATH
+  #   ports:
+  #     - "5000:5000"
 
   # ffmpeg:
   #   build:
@@ -39,6 +39,15 @@ services:
   #     - ./containers/ffmpeg/data:/data
   #   tty: true
   #   entrypoint: bash
+
+  publisher:
+    build:
+      context: ./containers/publisher
+    image: publisher:latest
+    container_name: publisher
+    hostname: publisher
+    ports:
+      - "3000:3000"
 
 networks:
   default:
