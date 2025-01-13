@@ -12,6 +12,6 @@ RUN npm i && npm ci
 COPY ./src ./src
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 18080
 
 CMD ["npm", "run", "start"]

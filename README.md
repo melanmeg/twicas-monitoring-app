@@ -85,3 +85,8 @@ curl -X POST "http://opensearch-node1:9200/logs/_doc" -H 'Content-Type: applicat
   "userId": "12345"
 }'
 ```
+
+```bash
+# publisher
+curl -X POST http://localhost:18080/send-message -H "Content-Type: application/json" -d '{"queue": "my_queue", "message": "テストメッセージ"}'
+```
