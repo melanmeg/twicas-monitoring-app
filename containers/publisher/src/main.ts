@@ -1,7 +1,6 @@
-import { setupLogDir } from "./common/setup.js";
-import { webhook } from "./api/webhook.js";
+import { IncomingWebHookResponse } from "./interfaces.js";
+import { Config } from "./environments.js";
 
 (async () => {
-  await setupLogDir();
-  await webhook();
+  console.log("Hello, world!");
 })();
