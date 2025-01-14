@@ -5,6 +5,7 @@ services:
   #   image: twicas:latest
   #   container_name: twicas
   #   hostname: twicas
+  #   command: ["npm", "run", "start"]
   #   environment:
   #     - USER_AGENT
   #     - YOUTUBE_TEST_URL
@@ -46,6 +47,7 @@ services:
     image: publisher:latest
     container_name: publisher
     hostname: publisher
+    command: ["npm", "run", "start"]
     environment:
       - RABBITMQ_URL
       - RABBITMQ_PORT

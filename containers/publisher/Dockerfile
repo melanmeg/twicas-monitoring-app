@@ -13,5 +13,3 @@ COPY ./src ./src
 RUN npm run build
 
 EXPOSE 18080
-
-CMD ["npm", "run", "start"]
