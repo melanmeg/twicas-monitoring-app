@@ -92,4 +92,7 @@ docker-compose exec twicas-publisher ash
 apk update
 apk add curl
 curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twicasting_jp", "is_live": true}}' http://localhost:18080
+
+# k8s
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twicasting_jp", "is_live": true}}' https://test-publisher.melanmeg.com
 ```
