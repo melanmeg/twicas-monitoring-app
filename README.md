@@ -88,7 +88,7 @@ curl -X POST "http://opensearch-node1:9200/logs/_doc" -H 'Content-Type: applicat
 
 ```bash
 # publisher
-docker-compose exec publisher ash
+docker-compose exec twicas-publisher ash
 apk update
 apk add curl
 curl -X POST http://localhost:18080/send-message -H "Content-Type: application/json" -d '{"queue": "my_queue", "message": "テストメッセージ"}'

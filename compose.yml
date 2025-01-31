@@ -1,10 +1,10 @@
 services:
-  # twicas:
+  # twicas-monitoring:
   #   build:
   #     context: ./containers/puppeteer
-  #   image: twicas:latest
-  #   container_name: twicas
-  #   hostname: twicas
+  #   image: twicas-monitoring:latest
+  #   container_name: twicas-monitoring
+  #   hostname: twicas-monitoring
   #   command: ["npm", "run", "start"]
   #   environment:
   #     - USER_AGENT
@@ -18,12 +18,12 @@ services:
   #   ports:
   #     - "18080:18080"
 
-  # flask:
+  # twicas-flask:
   #   build:
   #     context: ./containers/flask
-  #   image: flask:latest
-  #   container_name: flask
-  #   hostname: flask
+  #   image: twicas-flask:latest
+  #   container_name: twicas-flask
+  #   hostname: twicas-flask
   #   environment:
   #     - TOKEN
   #     - DB_FILE_PATH
@@ -41,12 +41,12 @@ services:
   #   tty: true
   #   entrypoint: bash
 
-  publisher:
+  twicas-publisher:
     build:
       context: ./containers/publisher
-    image: publisher:latest
-    container_name: publisher
-    hostname: publisher
+    image: twicas-publisher:latest
+    container_name: twicas-publisher
+    hostname: twicas-publisher
     command: ["npm", "run", "start"]
     environment:
       - RABBITMQ_URL
