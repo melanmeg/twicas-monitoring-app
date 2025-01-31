@@ -1,6 +1,7 @@
 import express from "express";
 import amqp from "amqplib";
 import { Config } from "./environments.js";
+import { IncomingWebHookResponse } from "./interfaces.js";
 
 const sendMessageToQueue = async (queue: string, message: string) => {
   try {
@@ -25,15 +26,19 @@ const sendMessageToQueue = async (queue: string, message: string) => {
 const app = express();
 app.use(express.json());
 
-app.post("/send-message", async (req, res) => {
-  const { queue, message } = req.body;
-  if (queue && message) {
+app.post("/", async (req, res) => {
+  const body: IncomingWebHookResponse = req.body;
+  const queue: string = "my_queue";
+  const message: string = JSON.stringify(body);
+  const is_live: boolean = body.broadcaster.is_live;
+
+  if (queue && message && is_live) {
     await sendMessageToQueue(queue, message);
     res.status(200).send("Message has been sent");
   } else {
     res
       .status(400)
-      .send("Please include 'queue' and 'message' in the request body");
+      .send("Error: Queue, message, or is_live is missing or invalid");
   }
 });
 
