@@ -91,5 +91,5 @@ curl -X POST "http://opensearch-node1:9200/logs/_doc" -H 'Content-Type: applicat
 curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twicasting_jp", "is_live": true}}' http://localhost:18080
 
 # publisher (k8s)
-curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "twicasting_jp", "is_live": true}}' https://test-publisher.melanmeg.com
+curl -X POST -H "Content-Type: application/json" -d ' {"signature": "hoge","broadcaster": {"screen_id": "kagamin0514", "is_live": true}}' https://test-publisher.melanmeg.com
 ```
