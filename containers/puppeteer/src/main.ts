@@ -1,7 +1,7 @@
 import { setupLogDir } from "./common/setup.js";
-import { webhook } from "./api/webhook.js";
+import { consumeMessageOne } from "./api/consume_one.js";
 
 (async () => {
   await setupLogDir();
-  await webhook();
+  await consumeMessageOne();
 })();

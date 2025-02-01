@@ -1,22 +1,23 @@
 services:
-  # twicas-monitoring:
-  #   build:
-  #     context: ./containers/puppeteer
-  #   image: twicas-monitoring:latest
-  #   container_name: twicas-monitoring
-  #   hostname: twicas-monitoring
-  #   command: ["npm", "run", "start"]
-  #   environment:
-  #     - USER_AGENT
-  #     - YOUTUBE_TEST_URL
-  #     - OPENSEARCH_URL
-  #     - OPENSEARCH_USER
-  #     - OPENSEARCH_PASSWORD
-  #     - DOWNLOAD_DIR
-  #     - PORT_NUM
-  #     - LOG_DIR
-  #   ports:
-  #     - "18080:18080"
+  twicas-monitoring:
+    build:
+      context: ./containers/puppeteer
+    image: twicas-monitoring:latest
+    container_name: twicas-monitoring
+    hostname: twicas-monitoring
+    command: ["npm", "run", "start"]
+    environment:
+      - USER_AGENT
+      - YOUTUBE_TEST_URL
+      - OPENSEARCH_URL
+      - OPENSEARCH_USER
+      - OPENSEARCH_PASSWORD
+      - DOWNLOAD_DIR
+      - LOG_DIR
+      - RABBITMQ_URL
+      - RABBITMQ_PORT
+      - RABBITMQ_USER
+      - RABBITMQ_PASSWORD
 
   # twicas-flask:
   #   build:
