@@ -4,6 +4,7 @@ import { Client } from "@opensearch-project/opensearch";
 
 import { Config } from "../environments.js";
 import { CommentData, CommentValues } from "../interfaces.js";
+import { checkStreaming } from "../common/utils.js";
 
 export async function fetchComments(page: Page): Promise<CommentData | null> {
   const html: string = await page.content(); // ページのHTMLコンテンツを取得
@@ -98,12 +99,17 @@ export async function collectComments(
     console.info(`${userId}: Monitoring aborted`);
   });
 
-  const selector =
-    "#comment-list-app > div.tw-comment-list-view.tw-player-page__comment__list > div.tw-comment-list-view__scroller";
-  await page.waitForSelector(selector, {
-    visible: true,
-    timeout: 5000,
-  });
+  try {
+    const selector =
+      "#comment-list-app > div.tw-comment-list-view.tw-player-page__comment__list > div.tw-comment-list-view__scroller";
+    await page.waitForSelector(selector, {
+      visible: true,
+      timeout: 5000,
+    });
+  } catch (e) {
+    console.error("Error waiting for selector.");
+    throw e;
+  }
 
   let oldId = "",
     oldComment = "";
@@ -131,5 +137,8 @@ export async function collectComments(
     } else {
       console.log("No comments data available.");
     }
+
+    // 配信終了判定を非同期に実行
+    await checkStreaming(page, 5000);
   }
 }

@@ -22,7 +22,7 @@ if method_frame:
         # メッセージの処理を実行
         # ここに処理ロジックを追加
         print("メッセージの処理が正常に完了しました")
-        sleep(1000)
+        # sleep(1000)
 
         # 処理が成功した場合にACKを送信
         channel.basic_ack(delivery_tag=method_frame.delivery_tag)

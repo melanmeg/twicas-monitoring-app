@@ -1,4 +1,3 @@
-import * as http from "http";
 import * as fs from "fs";
 import { Page } from "puppeteer";
 import { IncomingWebHookResponse } from "../interfaces.js";
@@ -22,11 +21,12 @@ export async function liveStart(page: Page, userId: string): Promise<void> {
 
   try {
     await twicasMonitoring(page, userId, abortController.signal); // キャンセル可能な処理
-  } catch (error) {
-    if ((error as Error).name === "AbortError") {
+  } catch (e) {
+    if ((e as Error).name === "AbortError") {
       console.info(`${userId}: Process aborted`);
     } else {
-      console.error(error);
+      console.error("Unexpected error");
+      throw e;
     }
   }
 }
@@ -59,11 +59,12 @@ export async function mqhook(msg: string): Promise<void> {
   let parsedBody: IncomingWebHookResponse;
   try {
     parsedBody = JSON.parse(msg);
-  } catch (error: unknown) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
+  } catch (e: unknown) {
+    const errorMessage = e instanceof Error ? e.message : "Unknown error";
     log("Failed to parse JSON body: " + errorMessage);
-    return;
+
+    console.error("Failed to parse JSON body: " + errorMessage);
+    throw e;
   }
 
   const is_live: boolean = parsedBody.broadcaster.is_live;

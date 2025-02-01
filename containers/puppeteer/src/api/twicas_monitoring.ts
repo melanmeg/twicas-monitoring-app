@@ -1,5 +1,5 @@
 import { TimeoutError, Page } from "puppeteer";
-import { recordMedia } from "./record_media.js";
+// import { recordMedia } from "./record_media.js";
 import { collectComments } from "./collect_comments.js";
 // import { wait } from '../common/utils.js';
 
@@ -24,13 +24,14 @@ export async function twicasMonitoring(
     } else {
       console.warn("指定した要素が見つかりませんでした");
     }
-  } catch (error) {
-    if (error instanceof TimeoutError) {
+  } catch (e) {
+    if (e instanceof TimeoutError) {
       console.info(
         "要素が指定された時間内に見つかりませんでしたが、処理を続けます。"
       );
     } else {
-      console.error("エラー:", error); // 他のエラーを表示
+      console.error("予期せぬエラー"); // 他のエラーを表示
+      throw e;
     }
   }
 

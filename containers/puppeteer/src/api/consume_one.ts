@@ -32,9 +32,10 @@ export async function consumeMessageOne() {
         // 処理が成功した場合にACKを送信
         channel.ack(msg);
       } catch (e) {
-        console.error(`エラーが発生しました: ${e}`);
+        console.error("予期せぬエラー");
         // 処理に失敗した場合はACKを送信せず、再試行させる
         channel.nack(msg, false, true);
+        throw e;
       }
     } else {
       console.log("メッセージがありません");
@@ -43,7 +44,8 @@ export async function consumeMessageOne() {
     // 終了処理
     await channel.close();
     await connection.close();
-  } catch (error) {
-    console.error(`接続エラー: ${error}`);
+  } catch (e) {
+    console.error("consumeMessageOne エラー");
+    throw e;
   }
 }
