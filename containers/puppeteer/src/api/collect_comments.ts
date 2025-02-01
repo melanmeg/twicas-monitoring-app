@@ -139,6 +139,6 @@ export async function collectComments(
     }
 
     // 配信終了判定を非同期に実行
-    await checkStreaming(page, 5000);
+    await checkStreaming(userId, page, 5000);
   }
 }
